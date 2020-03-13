@@ -13,7 +13,6 @@
 <div class="buttons">
     <input id="labelLayer" type="button" value="이름 보이기" class="control-btn">
     <input id="cadastralLayer" type="button" value="지적도 보이기" class="control-btn">
-    <input id="bicycleLayer" type="button" value="자전거도로 보이기" class="control-btn">
     <input id="trafficLayer" type="button" value="교통상황 보이기" class="control-btn">
 </div>
 
@@ -69,19 +68,6 @@ $('#cadastralLayer').on('click', function(e) {
     } else {
         cadastralLayer.setMap(map);
         btn.addClass('control-on').val('지적도 감추기');
-    }
-});
-
-var bicycleLayer = new naver.maps.BicycleLayer();
-$('#bicycleLayer').on('click', function(e) {
-    e.preventDefault();
-    var btn = $(this);
-    if (bicycleLayer.getMap()) {
-        bicycleLayer.setMap(null);
-        btn.removeClass('control-on').val('자전거도로 보이기');
-    } else {
-        bicycleLayer.setMap(map);
-        btn.addClass('control-on').val('자전거도로 감추기');
     }
 });
 
