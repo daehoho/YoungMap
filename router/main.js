@@ -9,6 +9,6 @@ module.exports = function(app, config)
      });
 
      app.get('/kakao',function(req,res){
-        res.render('kakao.html');
+        res.render('kakao', {appkey: config.kakaokey});
     });
 }
