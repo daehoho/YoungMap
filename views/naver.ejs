@@ -9,22 +9,34 @@
 </head>
 <body>
 <div id="map" style="width:100%;height:900px;"></div>
+
 <div class="buttons">
-    <input id="labelLayer" type="button" value="보이기" class="control-btn">
+    <input id="labelLayer" type="button" value="이름 보이기" class="control-btn">
+    <input id="cadastralLayer" type="button" value="지적도 보이기" class="control-btn">
+    <input id="bicycleLayer" type="button" value="자전거도로 보이기" class="control-btn">
+    <input id="trafficLayer" type="button" value="교통상황 보이기" class="control-btn">
 </div>
+
 <div class="search">
     <input id="address" type="text" placeholder="주소를 넣어라" value="">
     <input id="submit" type="button" value="검색">
- </div>
+</div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script>
 var map = new naver.maps.Map('map', {
-    center: new naver.maps.LatLng(37.3595704, 127.105399),
+    center: new naver.maps.LatLng(37.5666103, 126.9783882),
+    mapTypeControl: true,
+    mapTypeControlOptions: { style: naver.maps.MapTypeControlStyle.DROPDOWN },
     mapTypes: new naver.maps.MapTypeRegistry({
-        'normal': naver.maps.NaverStyleMapTypeOption.getVectorMap()
+        'normal': naver.maps.NaverStyleMapTypeOption.getVectorMap(),
+        'satellite': naver.maps.NaverStyleMapTypeOption.getSatelliteMap(),
+        'terrain': naver.maps.NaverStyleMapTypeOption.getTerrainMap(),
+        'hybrid': naver.maps.NaverStyleMapTypeOption.getHybridMap()
     })
 });
 
+// label start
 var labelMapType = new naver.maps.NaverStyleMapTypeOption.getNormalLabelLayer();
 var labelMapTypeRegistry = new naver.maps.MapTypeRegistry({
     'label': labelMapType
@@ -38,14 +50,55 @@ $('#labelLayer').on('click', function(e) {
 
     if (labelLayer.getMap()) {
         labelLayer.setMap(null);
-        btn.removeClass('control-on').val('보이기');
+        btn.removeClass('control-on').val('이름 보이기');
     } else {
         labelLayer.setMap(map);
-        btn.addClass('control-on').val('감추기');
+        btn.addClass('control-on').val('이름 감추기');
     }
 });
 
+var cadastralLayer = new naver.maps.CadastralLayer();
+$('#cadastralLayer').on('click', function(e) {
+    e.preventDefault();
 
+    var btn = $(this);
+
+    if (cadastralLayer.getMap()) {
+        cadastralLayer.setMap(null);
+        btn.removeClass('control-on').val('지적도 보이기');
+    } else {
+        cadastralLayer.setMap(map);
+        btn.addClass('control-on').val('지적도 감추기');
+    }
+});
+
+var bicycleLayer = new naver.maps.BicycleLayer();
+$('#bicycleLayer').on('click', function(e) {
+    e.preventDefault();
+    var btn = $(this);
+    if (bicycleLayer.getMap()) {
+        bicycleLayer.setMap(null);
+        btn.removeClass('control-on').val('자전거도로 보이기');
+    } else {
+        bicycleLayer.setMap(map);
+        btn.addClass('control-on').val('자전거도로 감추기');
+    }
+});
+
+var trafficLayer = new naver.maps.TrafficLayer();
+$('#trafficLayer').on('click', function(e) {
+    e.preventDefault();
+    var btn = $(this);
+    if (trafficLayer.getMap()) {
+        trafficLayer.setMap(null);
+        btn.removeClass('control-on').val('교통상황 보이기');
+    } else {
+        trafficLayer.setMap(map);
+        btn.addClass('control-on').val('교통상황 감추기');
+    }
+});
+
+//search start
 var infoWindow = new naver.maps.InfoWindow({
   anchorSkew: true
 });
@@ -241,9 +294,9 @@ function checkLastString (word, lastString) {
 function hasAddition (addition) {
   return !!(addition && addition.value);
 }
-
 naver.maps.onJSContentLoaded = initGeocoder;
 naver.maps.Event.once(map, 'init_stylemap', initGeocoder);
+//search end
 </script>
 </body>
 

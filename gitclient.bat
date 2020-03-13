@@ -1,9 +1,7 @@
 @echo off
-
 echo author : Daeho Han(supreme2705@gmail.com)
-echo title : source tree install
-echo desc : install chocolatey and git client
-
+echo title : Git and Chocolatey Install
+echo desc : Install chocolatey and git client
 pause
 
 choco -v
